@@ -1,7 +1,9 @@
 ## Solrevdev.InstagramBasicDisplay ![](docs/instagram-logo.png)
 
 
-![CI](https://github.com/solrevdev/instagram-basic-display/workflows/CI/badge.svg) ![GitHub last commit](https://img.shields.io/github/last-commit/solrevdev/instagram-basic-display) ![Twitter Follow](https://img.shields.io/twitter/follow/solrevdev?label=Follow&style=social)
+![CI](https://github.com/solrevdev/instagram-basic-display/workflows/CI/badge.svg) ![GitHub last commit](https://img.shields.io/github/last-commit/solrevdev/instagram-basic-display) [![Twitter Follow](https://img.shields.io/twitter/follow/solrevdev?label=Follow&style=social)](https://twitter.com/solrevdev)
+
+
 
 A [netstandard2.0](https://docs.microsoft.com/en-us/dotnet/standard/net-standard) library that consumes the new [Instagram Basic Display API](https://developers.facebook.com/docs/instagram-basic-display-api/).
 
