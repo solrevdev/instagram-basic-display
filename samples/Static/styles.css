@@ -1,0 +1,23 @@
+#photos {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.thumbnail {
+    height: 150px;
+    width: 150px;
+    max-height: 150px;
+    max-width: 150px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+    display: inline-block;
+    margin: 5px;
+}
+
+
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 90%;
+        margin: 1.75rem auto;
+    }
+}

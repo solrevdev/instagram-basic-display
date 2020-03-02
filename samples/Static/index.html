@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instagram Basic Display API - vanilla js</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/flatly/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-yrfSO0DBjS56u5M+SjWTyAHujrkiYVtRYh2dtB3yLQtUz3bodOeialO59u5lUCFF" crossorigin="anonymous" />
+    <link href="styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <h3>
+            <a href="https://developers.facebook.com/docs/instagram-basic-display-api">Instagram Basic Display API
+                Example</a>
+            - Vanilla JS
+        </h3>
+        <p class="lead">
+            🚨 This example shows how to authenticate and consume the Instagram Basic Display API but please do be aware
+            that because it is static and client side you should not publish direct to production as it does not protect
+            your <code>client_secret</code>.
+        </p>
+        <ul>
+            <li>The help button will show the contents of the <a href="readme.md">readme.md</a> file and the login
+                button will redirect to the Instagram authorization window to start the OAuth login process</li>
+            <li>For the static version to work you will need to serve this page via https.</li>
+            <li>You can do this locally by using <a href="https://ngrok.com">ngrok</a>. Instructions on how to do this
+                is in the <a href="readme.md">readme.md</a> file. The Show help button will display this document here.
+            </li>
+        </ul>
+        <p>
+            This is the code behind the login button:<br><br>
+            <code>
+                https://api.instagram.com/oauth/authorize?client_id={client_id}&redirect_uri={redirect_url}&scope=user_profile,user_media&response_type=code
+            </code><br><br>
+            Edit the <strong>client_id</strong> and <strong>redirect_url</strong> variables in <strong>index.js</strong>
+        </p>
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#readmeModel">
+            Show help
+        </button>
+
+        <a id="loginButton" href="" class="btn btn-primary">Login</a>
+
+        <!-- Help Modal -->
+        <div class="modal fade" id="readmeModel" tabindex="-1" role="dialog" aria-labelledby="readmeModelTitle"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="readmeModelTitle">Instagram Basic Display API - Static Sample</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="readme"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/10.0.0/markdown-it.min.js"
+        integrity="sha256-YASERpEeN8gRNr/Fy4Km34WGFqIq1h6HkJMAQnVHlhk=" crossorigin="anonymous"></script>
+
+    <script src="index.js"></script>
+</body>
+
+</html>

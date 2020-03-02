@@ -1,0 +1,295 @@
+﻿@page
+@model Web.IndexModel
+@{
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Basic Display API</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-yrfSO0DBjS56u5M+SjWTyAHujrkiYVtRYh2dtB3yLQtUz3bodOeialO59u5lUCFF" crossorigin="anonymous">
+    <style>
+        [v-cloak] {
+          display: none;
+        }
+
+        .photos {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .thumbnail {
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
+            text-align: center;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .fade-enter-active {
+            transition: opacity 3s ease-in-out;
+        }
+
+        .fade-enter-to {
+            opacity: 1;
+        }
+
+        .fade-enter {
+            opacity: 0;
+        }
+
+        #transbox {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 1000;
+        }
+
+        #transboxcontent {
+            display: table;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #transboxtext {
+            display: table-cell;
+            vertical-align: middle;
+            width: 100%;
+            text-align: center;
+            font-size: larger;
+            padding-top: 80px;
+        }
+
+        #transboxtext p {
+            font-size: larger;
+            border: 1px solid black;
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .nextTextButton {
+            margin: 5px;
+        }
+
+        .imageselected {
+            opacity: 0.4;
+            filter: alpha(opacity=40);
+            /* msie */
+        }
+
+        .nav-fixed-bottom {
+            position: fixed;
+            height: 100px;
+            bottom: 0;
+            width: 100%;
+            background-color: white;
+            color: #cbdb2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>Instagram API VueJS JavaScript example</h3>
+        <p><a href="../Index">Go home</a></p>
+    </div>
+
+    <div id="app" v-cloak>
+        <div class="container">
+            <div v-if="currentNumberOfSelectedImages === maxNumberOfSelectedImages" class="alert alert-success alert-dismissible fade show" role="alert">
+                <p>
+                    <span>✅ </span><span>You have now selected the maximum number of images <strong>({{maxNumberOfSelectedImages}})</strong>Click continue to see them.</span>
+                </p>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div v-if="chosenImages.length > 0 && currentNumberOfSelectedImages === maxNumberOfSelectedImages" class="alert alert-success alert-dismissible fade show" role="alert">
+                <p><span>✅ </span>You chose: </p>
+                <ul class="photos">
+                    <li class="thumbnail img-thumbnail" v-for="(image, i) in chosenImages" :key="image">
+                        <img :src="image" alt="" class="img-responsive imagetile lazyload" height="75" width="75">
+                    </li>
+                </ul>
+                <button type="button" class="close" v-on:click="chosenImages = [];" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div id="imagearea">
+                <div class="photos">
+                    <transition-group name="fade">
+                        <div class="thumbnail img-thumbnail" v-for="(photo, i) in photos" :key="photo.id">
+                            <img :alt="photo.caption"
+                                 :data-src="photo.media_url"
+                                 :data-standard-resolution="photo.media_url"
+                                 v-on:click.prevent="imageClicked"
+                                 class="img-responsive imagetile lazyload"
+                                 height="150" width="150">
+                        </div>
+                    </transition-group>
+                </div>
+            </div>
+            <br>
+            <hr>
+
+            <div id="transbox">
+                <div id="transboxcontent">
+                    <div id="transboxtext">
+                        <p>Please choose 10 images from your instagram feed.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navbar navbar-light bg-light nav-fixed-bottom">
+            <div class="mx-auto d-block">
+                <a  href="#" class="btn btn-primary nav-item mx-5" v-bind:disabled="loadMorePhotos === false" v-on:click.prevent="loadMore">
+                    <p class="nextTextButton">Load more</p>
+                </a>
+
+                <a id="nextbutton" class="btn btn-primary nav-item mx-5" v-on:click.prevent="submitForm" v-show="currentNumberOfSelectedImages === maxNumberOfSelectedImages">
+                    <p class="nextTextButton">Continue</p>
+                </a>
+                <a id="nextbutton" class="btn btn-primary nav-item"  v-show="currentNumberOfSelectedImages !== maxNumberOfSelectedImages">
+                    <p class="nextTextButton">
+                        {{currentNumberOfSelectedImages}} out of {{maxNumberOfSelectedImages}}
+                    </p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha256-WqU1JavFxSAMcLP2WIOI+GB2zWmShMI82mTpLDcqFUg=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.0/lazysizes.min.js" integrity="sha256-h2tMEmhemR2IN4wbbdNjj9LaDIjzwk2hralQwfJmBOE=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js" integrity="sha256-VeNaFBVDhoX3H+gJ37DpT/nTuZTdjYro9yBruHjVmoQ=" crossorigin="anonymous"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js" integrity="sha256-ngFW3UnAN0Tnm76mDuu7uUtYEcG3G5H1+zioJw3t+68=" crossorigin="anonymous"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js" integrity="sha256-NSuqgY2hCZJUN6hDMFfdxvkexI7+iLxXQbL540RQ/c4=" crossorigin="anonymous"></script>
+
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                loadMorePhotos: true,
+                apiUrl: '/api/instagram',
+                photos: [],
+                currentNumberOfSelectedImages: 0,
+                maxNumberOfSelectedImages: 10,
+                chosenImages : []
+            },
+            beforeMount: function () {
+                this.fetchPhotos();
+            },
+            created: function () {
+                window.addEventListener('scroll', _.throttle(this.handleScroll, 1000, { trailing: true, leading: true }));
+            },
+            destroyed: function () {
+                window.removeEventListener('scroll', _.throttle(this.handleScroll, 1000, { trailing: true, leading: true }));
+            },
+            methods: {
+                handleScroll: function (event) {
+                    let bottomOfWindow = false;
+                    const totalHeight = window.innerHeight + window.pageYOffset;
+                    const scrollHeight = document.body.offsetHeight - 250;
+
+                    if (totalHeight >= scrollHeight) {
+                        bottomOfWindow = true;
+                    } else {
+                        bottomOfWindow = false;
+                    }
+
+                    if (bottomOfWindow) {
+                        if (this.loadMorePhotos) {
+                            this.fetchPhotos();
+                        }
+                    }
+                },
+                loadMore: function () {
+                    if (this.loadMorePhotos) {
+                        this.fetchPhotos();
+                    }
+                },
+                fetchPhotos: function () {
+                    fetch(this.apiUrl, {
+                        method: 'GET',
+                        credentials: 'include'
+                    })
+                        .then(response => {
+                            return response.json();
+                        })
+                        .then(result => {
+                            if (!result) {
+                                console.log(`API -fetch result is null for ${this.apiUrl}`);
+                            }
+                            if (result.error) {
+                                console.log(`API Error from ${this.apiUrl} : ${result.error}`);
+                            } else {
+                                const data = result.data.filter(item => item.media_type === 'IMAGE');
+                                this.photos.push.apply(this.photos, data);
+
+                                if (result.paging && result.paging.next && result.paging.next != this.apiUrl) {
+                                    this.apiUrl = `/api/instagram?url=${encodeURIComponent(result.paging.next)}`;
+                                } else {
+                                    this.apiUrl = '/api/instagram';
+                                    this.loadMorePhotos = false;
+                                }
+                            }
+                        })
+                        .catch(function (err) {
+                            console.log(`API - unhandled exception from ${this.apiUrl} : ${err}`);
+                        });
+                },
+                imageClicked: function (event) {
+                    const image = event.target;
+                    if (image && image.classList.contains('imagetile')) {
+                        if (image.classList.contains('imageselected')) {
+                            this.currentNumberOfSelectedImages--;
+                            image.classList.remove('imageselected');
+                        } else {
+                            if(this.currentNumberOfSelectedImages < this.maxNumberOfSelectedImages) {
+                                this.currentNumberOfSelectedImages++;
+                                image.classList.add('imageselected');
+                            }
+                        }
+                    }
+                },
+                submitForm: function (event) {
+                    event.preventDefault();
+                    const chosenImagesDom = document.querySelectorAll('.imageselected');
+                    const images = Array.apply(null, chosenImagesDom);
+
+                    for (let i = 0; i < images.length; i++) {
+                        const imageUrl = images[i].getAttribute('data-standard-resolution');
+                        this.chosenImages.push(imageUrl);
+                    }
+                }
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $("#transbox").fadeIn();
+            $("#transbox").click(function () {
+                $("#transbox").fadeOut();
+            });
+
+            $(document).keyup(function (e) {
+                if (e.keyCode == 27) { // escape key maps to keycode `27`
+                    $("#transbox").fadeOut();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

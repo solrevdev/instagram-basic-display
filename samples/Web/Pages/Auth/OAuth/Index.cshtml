@@ -1,0 +1,86 @@
+﻿@page
+@model Web.Pages.Auth.OAuth.IndexModel
+
+@{
+    var code = Model.Code;
+    var state = Model.State;
+    var user = Model.UserInfo;
+    var allMedia = Model.Media;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Basic Display API</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-yrfSO0DBjS56u5M+SjWTyAHujrkiYVtRYh2dtB3yLQtUz3bodOeialO59u5lUCFF" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h3>Instagram Basic Display API - Redirect Url Page</h3>
+        <div class="lead">
+            <p>
+                The  user is sent back to this page on a successful login to instagram with a code and state.
+            </p>
+            <p>
+                The code and state is then exchanged then for a short-lived access token. You can optionaly then swap that for long-lived access token lasting 60 days
+            </p>
+            <p>
+                This links to all media
+                <a href="/medialist/">All Media</a>
+            </p>
+            <p>
+                This links to all media but uses a VueJS client side example.
+                <a href="/api/">All Media (VueJS example)</a>
+            </p>
+        </div>
+
+        <table class="table table-condensed">
+            <tbody>
+                <tr>
+                    <td>Code</td>
+                    <td>@code</td>
+                </tr>
+                <tr>
+                    <td>State</td>
+                    <td>@state</td>
+                </tr>
+                <tr>
+                    <td>User</td>
+                    <td>
+                        @user.Username with @user.MediaCount photos and type is @user.AccountType
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        @{
+            if (null != allMedia && allMedia.Count > 0)
+            {
+                @foreach (var media in allMedia.Where(media => media?.Data != null && media.Data.Count > 0))
+                {
+                    foreach (var item in media.Data)
+                    {
+                        @if (item.MediaType != "VIDEO")
+                        {
+                            <div class="card mb-2">
+                                <div class="card-body">
+                                    <h5 class="card-title">@item.MediaType</h5>
+                                    <p class="card-text">@item.Caption</p>
+                                    <p class="card-text">
+                                        <small class="text-muted">
+                                            @DateTime.Parse(item.Timestamp, null, System.Globalization.DateTimeStyles.RoundtripKind)
+                                        </small>
+                                    </p>
+                                </div>
+                                <img class="card-img-bottom img-fluid" src="@item.MediaUrl" alt="@item.Caption">
+                            </div>
+                        }
+                    }
+                }
+            }
+        }
+    </div>
+</body>
+</html>
+

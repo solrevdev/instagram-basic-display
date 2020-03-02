@@ -1,0 +1,34 @@
+﻿@page
+@model Web.Pages.IndexModel
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Basic Display API</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-yrfSO0DBjS56u5M+SjWTyAHujrkiYVtRYh2dtB3yLQtUz3bodOeialO59u5lUCFF" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h3>Instagram Basic Display API Start Page</h3>
+        <p class="lead">
+            The top link will send the user to Instagram to authorize then return them to your <code>redirect_url</code>
+            to swap the authorisation code for an OAuthResponse and then display your recent media on the same page.
+        </p>
+        <p></p>
+            The second link will display all your Media from Instagram provided you have already authenticated with Instagram
+        </p>
+        <p>
+            The third link will also display all your Media from Instagram provided you have already authenticated with
+            Instagram however this sample uses client side javascript to call an /api endoint that returns the data as JSON.
+        </p>
+        <p>The <a href="/auth/">Authenticate with Instagram</a> link</p>
+        <p>The <a href="/medialist/">All media</a> link</p>
+        <p>The <a href="/api/">All media (VueJS example) link<p>
+    </div>
+</body>
+</html>
+
+

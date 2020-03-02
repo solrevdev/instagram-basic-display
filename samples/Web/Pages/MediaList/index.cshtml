@@ -1,0 +1,55 @@
+@page
+@model Web.Pages.MediaList.IndexModel
+
+@{
+     var allMedia = Model.Media;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Basic Display API</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-yrfSO0DBjS56u5M+SjWTyAHujrkiYVtRYh2dtB3yLQtUz3bodOeialO59u5lUCFF" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h3>Instagram Basic Display API - MediaList</h3>
+        <p class="lead">
+            This page recursivley calls <code>GetMediaListAsync()</code> until there are no more <code>Media.Paging.Next</code> url's
+        </p>
+        <p>
+            <a href="../Index">Go again</a>
+        </p>
+
+        @{
+            if (null != allMedia && allMedia.Count > 0)
+            {
+                @foreach (var media in allMedia.Where(media => media?.Data != null && media.Data.Count > 0))
+                {
+                    foreach (var item in media.Data)
+                    {
+                        @if (item.MediaType != "VIDEO")
+                        {
+                            <div class="card mb-2">
+                                <div class="card-body">
+                                    <h5 class="card-title">@item.MediaType</h5>
+                                    <p class="card-text">@item.Caption</p>
+                                    <p class="card-text">
+                                        <small class="text-muted">
+                                            @DateTime.Parse(item.Timestamp, null, System.Globalization.DateTimeStyles.RoundtripKind)
+                                        </small>
+                                    </p>
+                                </div>
+                                <img class="card-img-bottom img-fluid" src="@item.MediaUrl" alt="@item.Caption">
+                            </div>
+                        }
+                    }
+                }
+            }
+        }
+    </div>
+</body>
+</html>
+
