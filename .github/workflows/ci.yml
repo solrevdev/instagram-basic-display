@@ -1,17 +1,44 @@
-name: .NET Core
+name: CI
 
-on: [push]
+on:
+    push:
+        branches:
+            - master
+            - release/*
+    pull_request:
+        branches:
+            - master
+            - release/*
 
 jobs:
-  build:
+    build:
+        runs-on: windows-latest
 
-    runs-on: ubuntu-latest
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v2
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 2.2.108
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
+            - name: nerdbank gitversioning
+              uses: AArnott/nbgv@v0.3
+              with:
+                  setAllVars: true
+
+            - name: setup .net core sdk
+              uses: actions/setup-dotnet@v1
+              with:
+                  dotnet-version: 3.0.101
+
+            - name: dotnet build
+              run: dotnet build instagram-basic-display.sln --configuration Release
+
+            - name: dotnet test
+              run: dotnet test instagram-basic-display.sln -c Release --no-build
+
+            - name: dotnet pack
+              run: dotnet pack instagram-basic-display.sln -c Release --no-build --include-source --include-symbols
+
+            - name: setup nuget
+              if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+              uses: NuGet/setup-nuget@v1.0.2
+              with:
+                  nuget-version: latest         
