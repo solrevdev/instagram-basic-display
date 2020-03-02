@@ -1,5 +1,7 @@
 ## Solrevdev.InstagramBasicDisplay ![](docs/instagram-logo.png)
 
+![CI](https://github.com/solrevdev/instagram-basic-display/workflows/CI/badge.svg)
+
 A [netstandard2.0](https://docs.microsoft.com/en-us/dotnet/standard/net-standard) library that consumes the new [Instagram Basic Display API](https://developers.facebook.com/docs/instagram-basic-display-api/).
 
 Also includes a sample [Razor Pages Web](samples/Web/readme.md#razor-pages-example) example that shows how to use the library and a [Static site](samples/Static/readme.md#static-example) example that shows how to consume the new [Instagram Basic Display API](https://developers.facebook.com/docs/instagram-basic-display-api/) with just vanilla JavaScript.
