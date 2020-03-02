@@ -6,10 +6,10 @@
 
   <PropertyGroup>
     <PackageId>Solrevdev.InstagramBasicDisplay</PackageId>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Title>Solrevdev.InstagramBasicDisplay</Title>
-    <Description>A netstandard2.0 library that consumes the new Instagram Basic Display API. Also includes a sample Razor Pages Web example that shows how to use the library and a Static site example that shows how to consume the new Instagram Basic Display API with just vanilla JavaScript.</Description>
-    <PackageDescription>A netstandard2.0 library that consumes the new Instagram Basic Display API. Also includes a sample Razor Pages Web example that shows how to use the library and a Static site example that shows how to consume the new Instagram Basic Display API with just vanilla JavaScript.</PackageDescription>
+    <Description>A netstandard2.0 library that consumes the new Instagram Basic Display API. Also includes a Razor Pages Web example that shows how to use the library and a Static site example that shows how to consume the new Instagram Basic Display API with just vanilla JavaScript.</Description>
+    <PackageDescription>A netstandard2.0 library that consumes the new Instagram Basic Display API. Also includes a Razor Pages Web example that shows how to use the library and a Static site example that shows how to consume the new Instagram Basic Display API with just vanilla JavaScript.</PackageDescription>
     <Authors>solrevdev</Authors>
     <Company>solrevdev</Company>
     <WarnOnPackingNonPackableProject>true</WarnOnPackingNonPackableProject>
@@ -19,7 +19,7 @@
     <PackageReleaseNotes>https://github.com/solrevdev/instagram-basic-display/releases</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>dotnetcore dotnet-standard dotnet instagram-api instagram basic-display-api oauth</PackageTags>
+    <PackageTags>dotnetcore;dotnet-standard;dotnet;instagram-api;instagram;basic-display-api;instagram-basic-display-api oauth;</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

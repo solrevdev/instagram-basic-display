@@ -1,10 +1,11 @@
 ## Solrevdev.InstagramBasicDisplay ![](docs/instagram-logo.png)
 
-![CI](https://github.com/solrevdev/instagram-basic-display/workflows/CI/badge.svg)
+
+![CI](https://github.com/solrevdev/instagram-basic-display/workflows/CI/badge.svg) ![GitHub last commit](https://img.shields.io/github/last-commit/solrevdev/instagram-basic-display) ![Twitter Follow](https://img.shields.io/twitter/follow/solrevdev?label=Follow&style=social)
 
 A [netstandard2.0](https://docs.microsoft.com/en-us/dotnet/standard/net-standard) library that consumes the new [Instagram Basic Display API](https://developers.facebook.com/docs/instagram-basic-display-api/).
 
-Also includes a sample [Razor Pages Web](samples/Web/readme.md#razor-pages-example) example that shows how to use the library and a [Static site](samples/Static/readme.md#static-example) example that shows how to consume the new [Instagram Basic Display API](https://developers.facebook.com/docs/instagram-basic-display-api/) with just vanilla JavaScript.
+Also includes a [Razor Pages Web](samples/Web/readme.md#razor-pages-example) example that shows how to use the library and a [Static site](samples/Static/readme.md#static-example) example that shows how to consume the new [Instagram Basic Display API](https://developers.facebook.com/docs/instagram-basic-display-api/) with just vanilla JavaScript.
 
 ### Getting started
 
@@ -67,9 +68,9 @@ In your [.NET Core](https://docs.microsoft.com/en-us/dotnet/core/about) library 
 
 **Get an Instagram User Access Token and permissions from an Instagram user**
 
-First you send the user to Instagram to authenticate using the `Authorize` method, they will be redirected to the `RedirectUrl` set in `InstagramCredentials` so ensure that is set-up correctly in the Instagram app settings page.
+First, you send the user to Instagram to authenticate using the `Authorize` method, they will be redirected to the `RedirectUrl` set in `InstagramCredentials` so ensure that is set-up correctly in the Instagram app settings page.
 
-Instagram will redirect the user on a successful login to the `RedirectUrl` page you configured in `InstagramCredentials` and this is where you can call `AuthenticateAsync` which exchanges the [Authorization Code](https://developers.facebook.com/docs/instagram-basic-display-api/overview#authorization-codes) for a [short-lived instagram user access token](https://developers.facebook.com/docs/instagram-basic-display-api/overview#instagram-user-access-tokens) or optionally a [long-lived instagram user access token](https://developers.facebook.com/docs/instagram-basic-display-api/guides/long-lived-access-tokens#get-a-long-lived-token).
+Instagram will redirect the user on a successful login to the `RedirectUrl` page you configured in `InstagramCredentials` and this is where you can call `AuthenticateAsync` which exchanges the [Authorization Code](https://developers.facebook.com/docs/instagram-basic-display-api/overview#authorization-codes) for a [short-lived Instagram user access token](https://developers.facebook.com/docs/instagram-basic-display-api/overview#instagram-user-access-tokens) or optionally a [long-lived Instagram user access token](https://developers.facebook.com/docs/instagram-basic-display-api/guides/long-lived-access-tokens#get-a-long-lived-token).
 
 You then have access to an `OAuthResponse` which contains your [access token](https://developers.facebook.com/docs/instagram-basic-display-api/reference/access_token) and a [user](https://developers.facebook.com/docs/instagram-basic-display-api/reference/user) which can be used to make further API calls.
 
@@ -100,7 +101,7 @@ public IndexModel(InstagramApi api, ILogger<IndexModel> logger)
     _logger = logger;
 }
 
-// code is passed by instagram, state is whatever you passed in _api.Authorize sent back to you
+// code is passed by Instagram, the state is whatever you passed in _api.Authorize sent back to you
 public async Task<IActionResult> OnGetAsync(string code, string state)
 {
     // this returns an access token that will last for 1 hour - short-lived access token
@@ -146,7 +147,7 @@ public IndexModel(InstagramApi api, ILogger<IndexModel> logger)
     _logger = logger;
 }
 
-// code is passed by instagram, state is whatever you passed in _api.Authorize sent back to you
+// code is passed by Instagram, the state is whatever you passed in _api.Authorize sent back to you
 public async Task<IActionResult> OnGetAsync(string code, string state)
 {
     // this returns an access token that will last for 1 hour - short-lived access token
@@ -178,7 +179,7 @@ public IndexModel(InstagramApi api, ILogger<IndexModel> logger)
     _logger = logger;
 }
 
-// code is passed by instagram, state is whatever you passed in _api.Authorize sent back to you
+// code is passed by Instagram, the state is whatever you passed in _api.Authorize sent back to you
 public async Task<IActionResult> OnGetAsync(string code, string state)
 {
     // this returns an access token that will last for 1 hour - short-lived access token
@@ -230,7 +231,7 @@ public IndexModel(InstagramApi api, ILogger<IndexModel> logger)
     _logger = logger;
 }
 
-// code is passed by instagram, state is whatever you passed in _api.Authorize sent back to you
+// code is passed by Instagram, the state is whatever you passed in _api.Authorize sent back to you
 public async Task<IActionResult> OnGetAsync(string code, string state)
 {
     // this returns an access token that will last for 1 hour - short-lived access token
@@ -254,8 +255,8 @@ public IndexModel(InstagramApi api, ILogger<IndexModel> logger)
     _logger = logger;
 }
 
-// code is passed by instagram, state is whatever you passed in _api.Authorize sent back to you
-public async Task<IActionResult> OnGetAsync(string code, string state)
+// code is passed by Instagram, the state is whatever you passed in _api.Authorize sent back to you
+ public async Task<IActionResult> OnGetAsync(string code, string state)
 {
     // this returns an access token that will last for 1 hour - short-lived access token
     var response = await _api.AuthenticateAsync(code, state).ConfigureAwait(false);
@@ -275,7 +276,7 @@ For more information see [InstagramApi.md](docs/InstagramApi.md#instagramapi)
 
 ### User Token Generator
 
-Facebook also provide tooling to quickly generate [long-lived Instagram User Access Tokens](https://developers.facebook.com/docs/instagram-basic-display-api/overview#instagram-user-access-tokens) for any of your public Instagram accounts.
+Facebook also provides tooling to quickly generate [long-lived Instagram User Access Tokens](https://developers.facebook.com/docs/instagram-basic-display-api/overview#instagram-user-access-tokens) for any of your public Instagram accounts.
 
 For more information see [User Token Generator](facebook-and-instagram-setup.md#user-token-generator).
 
