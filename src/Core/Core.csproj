@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <PackageId>Solrevdev.InstagramBasicDisplay</PackageId>
+    <Version>1.0.1</Version>
+    <Authors>solrevdev</Authors>
+    <Company>solrevdev</Company>
     <WarnOnPackingNonPackableProject>true</WarnOnPackingNonPackableProject>
     <NoWarn>$(NoWarn);NU5105</NoWarn>
     <RepositoryUrl>https://github.com/solrevdev/instagram-basic-display</RepositoryUrl>
