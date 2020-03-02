@@ -6,7 +6,7 @@
 
   <PropertyGroup>
     <PackageId>Solrevdev.InstagramBasicDisplay</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>solrevdev</Authors>
     <Company>solrevdev</Company>
     <WarnOnPackingNonPackableProject>true</WarnOnPackingNonPackableProject>
@@ -16,7 +16,7 @@
     <PackageReleaseNotes>https://github.com/solrevdev/instagram-basic-display/releases</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>instagram api basic-display-api oauth</PackageTags>
+    <PackageTags>dotnetcore dotnet-standard dotnet instagram-api instagram basic-display-api oauth</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
