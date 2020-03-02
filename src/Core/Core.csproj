@@ -13,7 +13,7 @@
     <NoWarn>$(NoWarn);NU5105</NoWarn>
     <RepositoryUrl>https://github.com/solrevdev/instagram-basic-display</RepositoryUrl>
     <PackageProjectUrl>https://github.com/solrevdev/instagram-basic-display</PackageProjectUrl>
-    <PackageReleaseNotes>https://github.com/solrevdev/instagram-basic-display/readme.md</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/solrevdev/instagram-basic-display/releases</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <PackageTags>dotnetcore dotnet-standard dotnet instagram-api instagram basic-display-api oauth</PackageTags>
