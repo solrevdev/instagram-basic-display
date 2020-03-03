@@ -1,7 +1,7 @@
 ## Solrevdev.InstagramBasicDisplay ![](docs/instagram-logo.png)
 
 
-![CI](https://github.com/solrevdev/instagram-basic-display/workflows/CI/badge.svg) ![GitHub last commit](https://img.shields.io/github/last-commit/solrevdev/instagram-basic-display) [![Twitter Follow](https://img.shields.io/twitter/follow/solrevdev?label=Follow&style=social)](https://twitter.com/solrevdev)
+![GitHub last commit](https://img.shields.io/github/last-commit/solrevdev/instagram-basic-display) ![CI](https://github.com/solrevdev/instagram-basic-display/workflows/CI/badge.svg) [![Nuget](https://img.shields.io/nuget/v/solrevdev.instagrambasicdisplay)](https://www.nuget.org/packages/Solrevdev.InstagramBasicDisplay/) [![Twitter Follow](https://img.shields.io/twitter/follow/solrevdev?label=Follow&style=social)](https://twitter.com/solrevdev)
 
 
 
@@ -23,13 +23,13 @@ Browse sample [Razor Pages Web](samples/Web/readme.md#razor-pages-example) and [
 
 ### Installation
 
-To install using the dotnet cli
+To install via [nuget](https://www.nuget.org/packages/Solrevdev.InstagramBasicDisplay/) using the dotnet cli
 
 ```bash
 dotnet add package Solrevdev.InstagramBasicDisplay
 ```
 
-To install using Visual Studio / Powershell
+To install via [nuget](https://www.nuget.org/packages/Solrevdev.InstagramBasicDisplay/) using Visual Studio / Powershell
 
 ```powershell
 Install-Package Solrevdev.InstagramBasicDisplay
