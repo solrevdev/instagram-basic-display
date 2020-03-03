@@ -26,15 +26,5 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Instagram
         /// The redirect-url to match what has been set in the instagram app.
         /// </summary>
         public string RedirectUrl { get; set; }
-
-        /// <summary>
-        /// TODO: remove when publishing
-        /// </summary>
-        public string Scheme { get; set; }
-
-        /// <summary>
-        /// TODO: remove when publishing
-        /// </summary>
-        public string Domain { get; set; }
     }
 }

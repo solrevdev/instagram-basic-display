@@ -230,9 +230,7 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Tests
                 Name = "Unit Testing Instagram Basic Display API",
                 ClientId = "123",
                 ClientSecret = "a4b4c4d4e4",
-                RedirectUrl = "http://www.localhost:5000/auth/oauth",
-                Scheme = "http",
-                Domain = "localhost:5000"
+                RedirectUrl = "http://www.localhost:5000/auth/oauth"
             };
         }
 

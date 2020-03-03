@@ -47,13 +47,7 @@ namespace Solrevdev.InstagramBasicDisplay.Core
         {
             AssertInstagramSettings();
 
-            var scheme = _appSettings.Scheme;
-            var domain = _appSettings.Domain;
-            var redirectUrl = $"{scheme}://www.{domain}/auth/oauth";
-
-            // TODO: replace this when publishing
-            // for testing I need the above but the real app with use this.
-            // var redirectUrl = _appSettings.RedirectUrl;
+            var redirectUrl = _appSettings.RedirectUrl;
 
             return $"https://api.instagram.com/oauth/authorize?client_id={_appSettings.ClientId}&redirect_uri={redirectUrl}&scope=user_profile,user_media&response_type=code&state={state}";
         }
@@ -340,10 +334,7 @@ namespace Solrevdev.InstagramBasicDisplay.Core
 
             try
             {
-                var scheme = _appSettings.Scheme;
-                var domain = _appSettings.Domain;
-                var redirectUrl = $"{scheme}://www.{domain}/auth/oauth";
-
+                var redirectUrl = _appSettings.RedirectUrl;
                 const string url = "https://api.instagram.com/oauth/access_token";
                 var parameters = new Dictionary<string, string> { { "client_id", _appSettings.ClientId },
                         { "client_secret", _appSettings.ClientSecret },
