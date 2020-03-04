@@ -37,13 +37,29 @@ namespace Solrevdev.InstagramBasicDisplay.Core
         /// <para>
         /// This will send the user to Instagram's authorization window where they will be told your app is requesting permissions you set when configuring your Instagram application at https://developers.facebook.com
         /// </para>
+        /// </summary>
+        /// <returns>The url to send the user to</returns>
+        public string Authorize()
+        {
+            AssertInstagramSettings();
+
+            return Authorize("");
+        }
+
+        /// <summary>
+        /// <para>
+        /// Returns the URL to send the user of your app to in order to begin the OAuth dance in order to get an access token.
+        /// </para>
+        /// <para>
+        /// This will send the user to Instagram's authorization window where they will be told your app is requesting permissions you set when configuring your Instagram application at https://developers.facebook.com
+        /// </para>
         /// <para>
         /// Note: you can pass a custom string in a state variable and Instagram will return that variable in the callback. This is useful for passing data between your app and Instagram. For example user-id's and such.
         /// </para>
         /// </summary>
-        /// <param name="state">An optional state parameter that when passed to Instagram will get returned in the callback</param>
-        /// <returns></returns>
-        public string Authorize(string state = "")
+        /// <param name="state">A state parameter that when passed to Instagram will get returned in the callback</param>
+        /// <returns>The url to send the user to</returns>
+        public string Authorize(string state)
         {
             AssertInstagramSettings();
 
@@ -53,13 +69,26 @@ namespace Solrevdev.InstagramBasicDisplay.Core
         }
 
         /// <summary>
-        ///  The authorization code from Instagram is exchanged for short-lived Instagram User Access Token or if the <param name="useLongTermAccessToken"></param> boolean is set to true it is exchanged for a long-lived Instagram User Access Token.
+        /// The authorization code from Instagram is exchanged for short-lived Instagram User Access Token and an <see="OAuthResponse" /> is returned.
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="state"></param>
+        /// <returns>An OAuthResponse object</returns>
+        public async Task<OAuthResponse> AuthenticateAsync(string code, string state)
+        {
+            AssertInstagramSettings();
+
+            return await AuthenticateAsync(code, state, false).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        ///  The authorization code from Instagram is exchanged for short-lived Instagram User Access Token or if the <param name="useLongTermAccessToken"></param> boolean is set to true it is exchanged for a long-lived Instagram User Access Token and an <see="OAuthResponse" /> is returned.
         /// </summary>
         /// <param name="code">The authorization code from Instagram returned in the querystring</param>
         /// <param name="state">The optional state parameter sent with the original request to Instagram</param>
         /// <param name="useLongTermAccessToken">true for a long-lived token and false the default short-lived token.</param>
         /// <returns>An OAuthResponse object</returns>
-        public async Task<OAuthResponse> AuthenticateAsync(string code, string state, bool useLongTermAccessToken = false)
+        public async Task<OAuthResponse> AuthenticateAsync(string code, string state, bool useLongTermAccessToken)
         {
             AssertInstagramSettings();
 
@@ -79,16 +108,10 @@ namespace Solrevdev.InstagramBasicDisplay.Core
                     _logger.LogInformation("Access token swapped for long term token. The token [{token}] and type [{type}] expires in [{expires}]", longTermToken.AccessToken, longTermToken.TokenType, longTermToken.ExpiresIn);
                 }
 
-                // make api endpoint call to get user info.
                 var userInfo = await GetUserAsync(accessToken, userId).ConfigureAwait(false);
                 _logger.LogInformation("User returned [{username}] with [{count}] and account type [{type}]", userInfo.Username, userInfo.MediaCount, userInfo.AccountType);
 
-                // return same object shape as old Instasharp library which this will replace.
-                return new OAuthResponse
-                {
-                    AccessToken = accessToken,
-                    User = userInfo
-                };
+                return new OAuthResponse { AccessToken = accessToken, User = userInfo };
             }
             catch (Exception ex)
             {
@@ -108,20 +131,19 @@ namespace Solrevdev.InstagramBasicDisplay.Core
             AssertInstagramSettings();
 
             if (response == null)
+            {
                 throw new ArgumentNullException(nameof(response));
+            }
+
             if (string.IsNullOrWhiteSpace(response.AccessToken))
+            {
                 throw new ArgumentNullException(nameof(response.AccessToken));
+            }
 
             var token = await GetLongLivedAccessTokenAsync(response.AccessToken).ConfigureAwait(false);
             if (token != null)
             {
-                //response.AccessToken = token.AccessToken; // TODO: do we set the original as well?
-
-                return new OAuthResponse
-                {
-                    User = response.User,
-                    AccessToken = token.AccessToken
-                };
+                return new OAuthResponse { User = response.User, AccessToken = token.AccessToken };
             }
 
             return response;
@@ -138,20 +160,21 @@ namespace Solrevdev.InstagramBasicDisplay.Core
             AssertInstagramSettings();
 
             if (response == null)
+            {
                 throw new ArgumentNullException(nameof(response));
+            }
+
             if (string.IsNullOrWhiteSpace(response.AccessToken))
+            {
                 throw new ArgumentNullException(nameof(response.AccessToken));
+            }
 
             var token = await RefreshLongLivedAccessToken(response.AccessToken).ConfigureAwait(false);
             if (token != null)
             {
                 //response.AccessToken = token.AccessToken; // TODO: do we set the original as well?
 
-                return new OAuthResponse
-                {
-                    User = response.User,
-                    AccessToken = token.AccessToken
-                };
+                return new OAuthResponse { User = response.User, AccessToken = token.AccessToken };
             }
 
             return response;
@@ -168,13 +191,24 @@ namespace Solrevdev.InstagramBasicDisplay.Core
             AssertInstagramSettings();
 
             if (response == null)
+            {
                 throw new ArgumentNullException(nameof(response));
+            }
+
             if (string.IsNullOrWhiteSpace(response.AccessToken))
+            {
                 throw new ArgumentNullException(nameof(response.AccessToken));
+            }
+
             if (response.User == null)
+            {
                 throw new ArgumentNullException(nameof(response.User));
+            }
+
             if (string.IsNullOrWhiteSpace(response.User.Id))
+            {
                 throw new ArgumentNullException(nameof(response.User.Id));
+            }
 
             return await GetUserAsync(response.AccessToken, response.User.Id).ConfigureAwait(false);
         }
@@ -183,9 +217,21 @@ namespace Solrevdev.InstagramBasicDisplay.Core
         /// Gets a <see also="UserInfo" /> for either the current user (me) or the user specified with a userId
         /// </summary>
         /// <param name="accessToken">An Instagram User Access Token</param>
-        /// <param name="userId">Defaults to me or a valid userId</param>
         /// <returns>A UserInfo object or null if an error is caught</returns>
-        public async Task<UserInfo> GetUserAsync(string accessToken, string userId = "me")
+        public async Task<UserInfo> GetUserAsync(string accessToken)
+        {
+            AssertInstagramSettings();
+
+            return await GetUserAsync(accessToken, "me").ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a <see also="UserInfo" /> for either the current user (me) or the user specified with a userId
+        /// </summary>
+        /// <param name="accessToken">An Instagram User Access Token</param>
+        /// <param name="userId">A valid userId</param>
+        /// <returns>A UserInfo object or null if an error is caught</returns>
+        public async Task<UserInfo> GetUserAsync(string accessToken, string userId)
         {
             AssertInstagramSettings();
 
@@ -212,13 +258,24 @@ namespace Solrevdev.InstagramBasicDisplay.Core
             AssertInstagramSettings();
 
             if (response == null)
+            {
                 throw new ArgumentNullException(nameof(response));
+            }
+
             if (string.IsNullOrWhiteSpace(response.AccessToken))
+            {
                 throw new ArgumentNullException(nameof(response.AccessToken));
+            }
+
             if (response.User == null)
+            {
                 throw new ArgumentNullException(nameof(response.User));
+            }
+
             if (string.IsNullOrWhiteSpace(response.User.Id))
+            {
                 throw new ArgumentNullException(nameof(response.User.Id));
+            }
 
             return await GetMediaListAsync(response.AccessToken, response.User.Id).ConfigureAwait(false);
         }
@@ -281,15 +338,29 @@ namespace Solrevdev.InstagramBasicDisplay.Core
             AssertInstagramSettings();
 
             if (response == null)
+            {
                 throw new ArgumentNullException(nameof(response));
+            }
+
             if (string.IsNullOrWhiteSpace(response.AccessToken))
+            {
                 throw new ArgumentNullException(nameof(response.AccessToken));
+            }
+
             if (response.User == null)
+            {
                 throw new ArgumentNullException(nameof(response.User));
+            }
+
             if (string.IsNullOrWhiteSpace(response.User.Id))
+            {
                 throw new ArgumentNullException(nameof(response.User.Id));
+            }
+
             if (string.IsNullOrWhiteSpace(mediaId))
+            {
                 throw new ArgumentNullException(nameof(mediaId));
+            }
 
             return await GetMediaAsync(response.AccessToken, mediaId).ConfigureAwait(false);
         }
@@ -305,10 +376,14 @@ namespace Solrevdev.InstagramBasicDisplay.Core
             AssertInstagramSettings();
 
             if (string.IsNullOrWhiteSpace(accessToken))
+            {
                 throw new ArgumentNullException(nameof(accessToken));
+            }
 
             if (string.IsNullOrWhiteSpace(mediaId))
+            {
                 throw new ArgumentNullException(nameof(mediaId));
+            }
 
             try
             {
@@ -409,7 +484,7 @@ namespace Solrevdev.InstagramBasicDisplay.Core
 
             if (string.IsNullOrWhiteSpace(_appSettings.ClientId))
             {
-                throw new ArgumentNullException(nameof(_appSettings.ClientId), string.Format(missingSettingTemplate,nameof(_appSettings.ClientId),nameof(InstagramCredentials)));
+                throw new ArgumentNullException(nameof(_appSettings.ClientId), string.Format(missingSettingTemplate, nameof(_appSettings.ClientId), nameof(InstagramCredentials)));
             }
 
             if (string.IsNullOrWhiteSpace(_appSettings.ClientSecret))

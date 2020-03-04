@@ -1,9 +1,6 @@
 ## Solrevdev.InstagramBasicDisplay ![](docs/instagram-logo.png)
 
-
 ![GitHub last commit](https://img.shields.io/github/last-commit/solrevdev/instagram-basic-display) ![CI](https://github.com/solrevdev/instagram-basic-display/workflows/CI/badge.svg) [![Nuget](https://img.shields.io/nuget/v/solrevdev.instagrambasicdisplay)](https://www.nuget.org/packages/Solrevdev.InstagramBasicDisplay/) [![Twitter Follow](https://img.shields.io/twitter/follow/solrevdev?label=Follow&style=social)](https://twitter.com/solrevdev)
-
-
 
 A [netstandard2.0](https://docs.microsoft.com/en-us/dotnet/standard/net-standard) library that consumes the new [Instagram Basic Display API](https://developers.facebook.com/docs/instagram-basic-display-api/).
 
@@ -137,7 +134,7 @@ public static class SessionExtensions
 }
 ```
 
-**Get an Instagram user’s profile**
+**Get an Instagram user's profile**
 
 ```csharp
 private readonly InstagramApi _api;
@@ -167,7 +164,7 @@ public async Task<IActionResult> OnGetAsync(string code, string state)
 }
 ```
 
-**Get an Instagram user’s images, videos, and albums**
+**Get an Instagram user's images, videos, and albums**
 
 ```csharp
 private readonly InstagramApi _api;
