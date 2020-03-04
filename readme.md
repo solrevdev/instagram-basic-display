@@ -1,6 +1,7 @@
 ## Solrevdev.InstagramBasicDisplay ![](docs/instagram-logo.png)
 
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e0962c08e11546f1b4f2a52349b6b616)](https://app.codacy.com/manual/john_41/instagram-basic-display?utm_source=github.com&utm_medium=referral&utm_content=solrevdev/instagram-basic-display&utm_campaign=Badge_Grade_Settings)
 ![GitHub last commit](https://img.shields.io/github/last-commit/solrevdev/instagram-basic-display) ![CI](https://github.com/solrevdev/instagram-basic-display/workflows/CI/badge.svg) [![Nuget](https://img.shields.io/nuget/v/solrevdev.instagrambasicdisplay)](https://www.nuget.org/packages/Solrevdev.InstagramBasicDisplay/) [![Twitter Follow](https://img.shields.io/twitter/follow/solrevdev?label=Follow&style=social)](https://twitter.com/solrevdev)
 
 
