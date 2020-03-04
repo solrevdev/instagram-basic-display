@@ -45,7 +45,7 @@ const redirect_url = 'enter your redirect_url here';
 cd path/to/samples/static/
 ```
 
-**Launch a web server in the `samples/Static` folder on port `5000`**
+### Launch a web server in the `samples/Static` folder on port `5000`
 
 Here are some examples in various languages and tools
 
@@ -78,7 +78,6 @@ php -S 127.0.0.1:5000
 
 ![](https://i.imgur.com/apkhDFl.png)
 
-
 ### Serve local site over HTTPS using ngrok
 
 Next you will need to serve the static site over ***HTTPS***
@@ -106,4 +105,3 @@ ngrok http 5000
 ### Open index page via ngrok
 
 e.g `https://ngrok.url/index.html` which will serve the index.html page from the samples/static folder over https which is required by the Facebook app.
-
