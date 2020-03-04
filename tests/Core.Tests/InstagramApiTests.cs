@@ -65,11 +65,14 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Tests
 
             // Act
             var api = new InstagramApi(options, logger, instagramHttpClient);
-            var ex = Assert.Throws<Exception>(() => api.Authorize(""));
+            var ex = Assert.Throws<ArgumentNullException>(() => api.Authorize(""));
 
             // Assert
+            var expected = "The Name is either null or empty please check the InstagramCredentials section in your appsettings.json (Parameter 'Name')";
+            var actual = ex.Message;
+
             Assert.NotNull(api);
-            Assert.Equal("The Name is either null or empty please check the InstagramCredentials section in your appsettings.json", ex.Message);
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
@@ -86,11 +89,14 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Tests
 
             // Act
             var api = new InstagramApi(options, logger, instagramHttpClient);
-            var ex = Assert.Throws<Exception>(() => api.Authorize(""));
+            var ex = Assert.Throws<ArgumentNullException>(() => api.Authorize(""));
 
             // Assert
+            var expected = "The ClientId is either null or empty please check the InstagramCredentials section in your appsettings.json (Parameter 'ClientId')";
+            var actual = ex.Message;
+
             Assert.NotNull(api);
-            Assert.Equal("The ClientId is either null or empty please check the InstagramCredentials section in your appsettings.json", ex.Message);
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
@@ -107,11 +113,14 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Tests
 
             // Act
             var api = new InstagramApi(options, logger, instagramHttpClient);
-            var ex = Assert.Throws<Exception>(() => api.Authorize(""));
+            var ex = Assert.Throws<ArgumentNullException>(() => api.Authorize(""));
 
             // Assert
+            var expected = "The ClientSecret is either null or empty please check the InstagramCredentials section in your appsettings.json (Parameter 'ClientSecret')";
+            var actual = ex.Message;
+
             Assert.NotNull(api);
-            Assert.Equal("The ClientSecret is either null or empty please check the InstagramCredentials section in your appsettings.json", ex.Message);
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
@@ -128,11 +137,14 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Tests
 
             // Act
             var api = new InstagramApi(options, logger, instagramHttpClient);
-            var ex = Assert.Throws<Exception>(() => api.Authorize(""));
+            var ex = Assert.Throws<ArgumentNullException>(() => api.Authorize(""));
 
             // Assert
+            var expected = "The RedirectUrl is either null or empty please check the InstagramCredentials section in your appsettings.json (Parameter 'RedirectUrl')";
+            var actual = ex.Message;
+
             Assert.NotNull(api);
-            Assert.Equal("The RedirectUrl is either null or empty please check the InstagramCredentials section in your appsettings.json", ex.Message);
+            Assert.Equal(expected, actual);
         }
 
         [Fact]

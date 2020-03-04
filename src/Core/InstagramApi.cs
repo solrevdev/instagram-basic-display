@@ -400,20 +400,32 @@ namespace Solrevdev.InstagramBasicDisplay.Core
         /// </summary>
         private void AssertInstagramSettings()
         {
+            const string missingSettingTemplate = "The {0} is either null or empty please check the {1} section in your appsettings.json";
+
             if (_appSettings == null)
-                throw new Exception($"The {nameof(InstagramCredentials)} are null please check your appsettings.json file");
+            {
+                throw new ArgumentNullException(nameof(InstagramCredentials), $"The {nameof(InstagramCredentials)} are null please check your appsettings.json file");
+            }
 
             if (string.IsNullOrWhiteSpace(_appSettings.ClientId))
-                throw new Exception($"The {nameof(_appSettings.ClientId)} is either null or empty please check the {nameof(InstagramCredentials)} section in your appsettings.json");
+            {
+                throw new ArgumentNullException(nameof(_appSettings.ClientId), string.Format(missingSettingTemplate,nameof(_appSettings.ClientId),nameof(InstagramCredentials)));
+            }
 
             if (string.IsNullOrWhiteSpace(_appSettings.ClientSecret))
-                throw new Exception($"The {nameof(_appSettings.ClientSecret)} is either null or empty please check the {nameof(InstagramCredentials)} section in your appsettings.json");
+            {
+                throw new ArgumentNullException(nameof(_appSettings.ClientSecret), string.Format(missingSettingTemplate, nameof(_appSettings.ClientSecret), nameof(InstagramCredentials)));
+            }
 
             if (string.IsNullOrWhiteSpace(_appSettings.RedirectUrl))
-                throw new Exception($"The {nameof(_appSettings.RedirectUrl)} is either null or empty please check the {nameof(InstagramCredentials)} section in your appsettings.json");
+            {
+                throw new ArgumentNullException(nameof(_appSettings.RedirectUrl), string.Format(missingSettingTemplate, nameof(_appSettings.RedirectUrl), nameof(InstagramCredentials)));
+            }
 
             if (string.IsNullOrWhiteSpace(_appSettings.Name))
-                throw new Exception($"The {nameof(_appSettings.Name)} is either null or empty please check the {nameof(InstagramCredentials)} section in your appsettings.json");
+            {
+                throw new ArgumentNullException(nameof(_appSettings.Name), string.Format(missingSettingTemplate, nameof(_appSettings.Name), nameof(InstagramCredentials)));
+            }
         }
     }
 }
