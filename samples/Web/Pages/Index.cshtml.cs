@@ -6,6 +6,7 @@ namespace Web.Pages
     {
         public void OnGet()
         {
+            // nothing to do here
         }
     }
 }
