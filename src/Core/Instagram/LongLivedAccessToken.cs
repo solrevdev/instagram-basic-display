@@ -24,7 +24,6 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Instagram
         /// <summary>
         /// bearer
         /// </summary>
-
         [JsonPropertyName("token_type")]
         public string TokenType { get; set; }
 

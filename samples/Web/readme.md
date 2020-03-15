@@ -45,7 +45,7 @@ Ensure `https://localhost:5001/auth/oauth` is a valid `redirect_url`
 cd path/to/samples/Web/
 ```
 
-**Run `dotnet` on port 5000**
+**Run `dotnet` on port 5001**
 
 ```powershell
 dotnet run

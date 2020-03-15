@@ -25,6 +25,8 @@
 
   <ItemGroup>
     <None Update="GetMediaListAsync.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="IGApiException.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="OAuthException.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

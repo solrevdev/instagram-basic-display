@@ -80,7 +80,7 @@ While `AuthenticateAsync` can optionally return a long-lived Instagram user acce
 /// Exchanges short-lived access token for a long-lived access token
 /// </summary>
 /// <param name="response">A valid <see cref="OAuthResponse"/></param>
-/// <returns>A OAuthResponse or null if an error is caught</returns>
+/// <returns>A OAuthResponse or an Exception if an error is caught</returns>
 /// <exception cref="ArgumentNullException">An Instagram User Access Token is needed</exception>
 public async Task<OAuthResponse> GetLongLivedAccessTokenAsync(OAuthResponse response)
 {
@@ -94,7 +94,7 @@ While a the initial 1 hour or an exchanged 60 day Instagram user access token wi
 /// Refreshes an existing long-lived Instagram User Access Token for another 60 day one.
 /// </summary>
 /// <param name="response">A valid <see cref="OAuthResponse"/></param>
-/// <returns>A refreshed long-lived 60 day access token or null if an error is caught</returns>
+/// <returns>A refreshed long-lived 60 day access token or an Exception if an error is caught</returns>
 /// <exception cref="ArgumentNullException">An Instagram User Access Token is needed</exception>
 public async Task<OAuthResponse> RefreshLongLivedAccessToken(OAuthResponse response)
 {
@@ -109,7 +109,7 @@ While `AuthenticateAsync` will return an `OAuthResponse` object containing a `Us
 /// </summary>
 /// <param name="accessToken">An Instagram User Access Token</param>
 /// <param name="userId">Defaults to me or a valid userId</param>
-/// <returns>A UserInfo object or null if an error is caught</returns>
+/// <returns>A UserInfo object or an Exception if an error is caught</returns>
 public async Task<UserInfo> GetUserAsync(string accessToken, string userId = "me")
 {
 
@@ -124,7 +124,7 @@ A common use case will be to get an Instagram user's image's, videos and albums 
 /// </summary>
 /// <param name="accessToken">An Instagram User Access Token</param>
 /// <param name="userId">Default to me or pass a valid userId</param>
-/// <returns>A Media object or null if an error is caught</returns>
+/// <returns>A Media object or an Exception if an error is caught</returns>
 public async Task<Media> GetMediaListAsync(string accessToken, string userId)
 {
 }
@@ -138,8 +138,16 @@ You can also get an individual media object from it's identifier, a common use c
 /// </summary>
 /// <param name="accessToken">An Instagram User Access Token</param>
 /// <param name="mediaId">A valid Media Id</param>
-/// <returns>A Media object or null if an error is caught</returns>
+/// <returns>A Media object or an Exception if an error is caught</returns>
 public async Task<Media> GetMediaAsync(string accessToken, string mediaId)
 {
 }
 ```
+
+### Exceptions
+
+From NuGet version 1.0.6 custom `Exceptions` are thrown whenever Instagram returns a non success `HttpStatusCode`.
+
+These allow you to `try` and `catch` and handle fails gracefully as well as get an insight into what the issue was.
+
+Look for `InstagramApiException` `InstagramOAuthException` and the more general `InstagramException`

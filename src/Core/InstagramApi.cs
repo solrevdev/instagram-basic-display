@@ -115,8 +115,8 @@ namespace Solrevdev.InstagramBasicDisplay.Core
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "[{me}] cannot exchange an authorization code from Instagram for either a short-lived or long-lived Instagram User Access Token with code [{code}] and state [{state}] because [{message}] and exception [{ex}]", nameof(AuthenticateAsync), code, state, ex.Message, ex);
-                return null;
+                _logger.LogError(ex, "[{me}] cannot exchange an authorization code from Instagram for either a short-lived or long-lived Instagram User Access Token with code [{code}] and state [{state}] because [{message}] and exception [{ex}] and stack [{stack}]", nameof(AuthenticateAsync), code, state, ex.Message, ex, ex.StackTrace);
+                throw;
             }
         }
 
@@ -243,7 +243,7 @@ namespace Solrevdev.InstagramBasicDisplay.Core
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Cannot [{me}] with the accessToken [{token}] and user [{user}]", nameof(GetUserAsync), accessToken, userId);
-                return null;
+                throw;
             }
         }
 
@@ -298,7 +298,7 @@ namespace Solrevdev.InstagramBasicDisplay.Core
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Cannot [{me}] with the accessToken [{token}] and user [{user}]", nameof(GetMediaListAsync), accessToken, userId);
-                return null;
+                throw;
             }
         }
 
@@ -323,7 +323,7 @@ namespace Solrevdev.InstagramBasicDisplay.Core
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Cannot [{me}] with the url [{url}]", nameof(GetMediaListAsync), url);
-                return null;
+                throw;
             }
         }
 
@@ -393,7 +393,7 @@ namespace Solrevdev.InstagramBasicDisplay.Core
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Cannot [{me}] with the accessToken [{token}] and media id [{user}]", nameof(GetMediaAsync), accessToken, mediaId);
-                return null;
+                throw;
             }
         }
 
@@ -424,7 +424,7 @@ namespace Solrevdev.InstagramBasicDisplay.Core
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Cannot [{me}] with the code [{code}] and the state [{state}]", nameof(GetShortLivedAccessTokenAsync), code, state);
-                return null;
+                throw;
             }
         }
 
@@ -445,7 +445,7 @@ namespace Solrevdev.InstagramBasicDisplay.Core
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Cannot [{me}] with the accessToken [{token}]", nameof(GetLongLivedAccessTokenAsync), accessToken);
-                return null;
+                throw;
             }
         }
 
@@ -466,7 +466,7 @@ namespace Solrevdev.InstagramBasicDisplay.Core
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Cannot [{me}] with the accessToken [{token}]", nameof(RefreshLongLivedAccessToken), accessToken);
-                return null;
+                throw;
             }
         }
 

@@ -22,7 +22,6 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Instagram
         /// <summary>
         /// The Media's type. Can be IMAGE, VIDEO, or CAROUSEL_ALBUM.
         /// </summary>
-
         [JsonPropertyName("media_type")]
         public string MediaType { get; set; }
 

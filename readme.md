@@ -280,3 +280,11 @@ Facebook also provides tooling to quickly generate [long-lived Instagram User Ac
 For more information see [User Token Generator](facebook-and-instagram-setup.md#user-token-generator).
 
 ![User Token Generator](https://i.imgur.com/Ql7mrk0.png)
+
+### Exceptions
+
+From NuGet version 1.0.6 custom `Exceptions` are thrown whenever Instagram returns a non success `HttpStatusCode`.
+
+These allow you to `try` and `catch` and handle fails gracefully as well as get an insight into what the issue was.
+
+Look for `InstagramApiException` `InstagramOAuthException` and the more general `InstagramException`

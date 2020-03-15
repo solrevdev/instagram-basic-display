@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Threading;
 using System.IO;
+using Solrevdev.InstagramBasicDisplay.Core.Exceptions;
 
 namespace Solrevdev.InstagramBasicDisplay.Core.Tests
 {
@@ -239,6 +240,80 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Tests
             Assert.Equal(25, response.Data.Count); // unless you page through its 25 items per request
         }
 
+        [Fact]
+        public async Task Authenticate_Handles_OAuthExceptions()
+        {
+            // Arrange
+            var credentials = MockInstagramCredentials();
+            var options = Options.Create(credentials);
+            var logger = Mock.Of<ILogger<InstagramApi>>();
+            var mockFactory = MockHttpClientFactory_For_Authenticate_Exception("OAuthException.json", HttpStatusCode.BadRequest);
+            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, logger);
+
+            // Act
+            var api = new InstagramApi(options, logger, instagramHttpClient);
+            var ex = await Assert.ThrowsAsync<InstagramOAuthException>(() => api.AuthenticateAsync("", "")).ConfigureAwait(false);
+
+            const string expectedMessage = "Error validating access token: Session has expired on Friday, 13-Mar-20 22:00:00 PDT. The current time is Saturday, 14-Mar-20 04:25:10 PDT.";
+            var actualMessage = ex.Message;
+
+            const string expectedType = "OAuthException";
+            var actualType = ex.ErrorType;
+
+            const int expectedCode = 190;
+            var actualCode = ex.ErrorCode;
+
+            const string expectedTraceId = "AzyAsv5wakY_WKcdKis3N32";
+            var actualTraceId = ex.FbTraceId;
+
+            // Assert
+            Assert.NotNull(api);
+            Assert.NotNull(ex);
+            Assert.Equal(expectedMessage, actualMessage);
+            Assert.Equal(expectedType, actualType);
+            Assert.Equal(expectedCode, actualCode);
+            Assert.Equal(expectedTraceId, actualTraceId);
+        }
+
+        [Fact]
+        public async Task Authenticate_Handles_IGExceptions()
+        {
+            // Arrange
+            var credentials = MockInstagramCredentials();
+            var options = Options.Create(credentials);
+            var logger = Mock.Of<ILogger<InstagramApi>>();
+            var mockFactory = MockHttpClientFactory_For_Authenticate_Exception("IGApiException.json", HttpStatusCode.BadRequest);
+            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, logger);
+
+            // Act
+            var api = new InstagramApi(options, logger, instagramHttpClient);
+            var ex = await Assert.ThrowsAsync<InstagramApiException>(() => api.AuthenticateAsync("", "")).ConfigureAwait(false);
+
+            const string expectedMessage = "Unsupported get request. Object with ID '3518610791' does not exist, cannot be loaded due to missing permissions, or does not support this operation";
+            var actualMessage = ex.Message;
+
+            const string expectedType = "IGApiException";
+            var actualType = ex.ErrorType;
+
+            const int expectedCode = 100;
+            var actualCode = ex.ErrorCode;
+
+            const int expectedSubCode = 33;
+            var actualSubCode = ex.ErrorSubcode;
+
+            const string expectedTraceId = "AZtb-9k2P_mHdfRi-sN4MNH";
+            var actualTraceId = ex.FbTraceId;
+
+            // Assert
+            Assert.NotNull(api);
+            Assert.NotNull(ex);
+            Assert.Equal(expectedMessage, actualMessage);
+            Assert.Equal(expectedType, actualType);
+            Assert.Equal(expectedCode, actualCode);
+            Assert.Equal(expectedSubCode, actualSubCode);
+            Assert.Equal(expectedTraceId, actualTraceId);
+        }
+
         private static InstagramCredentials MockInstagramCredentials()
         {
             return new InstagramCredentials
@@ -291,17 +366,46 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Tests
             return mockFactory;
         }
 
-        private static Mock<IHttpClientFactory> MockHttpClientFactory_For_GetMediaList()
+        private static Mock<IHttpClientFactory> MockHttpClientFactory_For_Authenticate_Exception(string file, HttpStatusCode statusCode = HttpStatusCode.BadRequest)
         {
             var mockFactory = new Mock<IHttpClientFactory>();
             var mockHttpMessageHandler = new Mock<HttpMessageHandler>();
-            var content = LoadFromFile("GetMediaListAsync.json");
+            var content = LoadFromFile(file);
+
+            mockHttpMessageHandler.Protected()
+                .SetupSequence<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                .ReturnsAsync(new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent("{\"access_token\": \"123\", \"user_id\": 123}"),
+                })
+                 .ReturnsAsync(new HttpResponseMessage
+                 {
+                     StatusCode = statusCode,
+                     Content = new StringContent(content),
+                 });
+
+            var client = new HttpClient(mockHttpMessageHandler.Object);
+            mockFactory.Setup(_ => _.CreateClient(It.IsAny<string>())).Returns(client);
+            return mockFactory;
+        }
+
+        private static Mock<IHttpClientFactory> MockHttpClientFactory_For_GetMediaList()
+        {
+            return MockHttpClientFactory_With_Json("GetMediaListAsync.json");
+        }
+
+        private static Mock<IHttpClientFactory> MockHttpClientFactory_With_Json(string file, HttpStatusCode statusCode = HttpStatusCode.OK)
+        {
+            var mockFactory = new Mock<IHttpClientFactory>();
+            var mockHttpMessageHandler = new Mock<HttpMessageHandler>();
+            var content = LoadFromFile(file);
 
             mockHttpMessageHandler.Protected()
                 .Setup<Task<HttpResponseMessage>>("SendAsync", ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
                 .ReturnsAsync(new HttpResponseMessage
                 {
-                    StatusCode = HttpStatusCode.OK,
+                    StatusCode = statusCode,
                     Content = new StringContent(content),
                 });
 
