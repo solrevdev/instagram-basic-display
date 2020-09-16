@@ -21,7 +21,7 @@ jobs:
             - name: setup .net core sdk
               uses: actions/setup-dotnet@v1
               with:
-                  dotnet-version: 3.0.101
+                  dotnet-version:  '3.1.x' # SDK Version to use; x will use the latest version of the 3.1 channel
 
             - name: dotnet build
               run: dotnet build instagram-basic-display.sln --configuration Release
