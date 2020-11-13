@@ -9,7 +9,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/samples/Web/bin/Debug/netcoreapp3.1/Web.dll",
+      "program": "${workspaceFolder}/samples/Web/bin/Debug/net5.0/Web.dll",
       "args": [],
       "cwd": "${workspaceFolder}/samples/Web",
       "stopAtEntry": false,
@@ -30,7 +30,7 @@
       "request": "launch",
       "preLaunchTask": "build",
       // If you have changed target frameworks, make sure to update the program path.
-      "program": "${workspaceFolder}/Console/src/bin/Debug/netcoreapp3.1/Console.dll",
+      "program": "${workspaceFolder}/Console/src/bin/Debug/net5.0/Console.dll",
       "args": [],
       "cwd": "${workspaceFolder}/Console/src",
       // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
