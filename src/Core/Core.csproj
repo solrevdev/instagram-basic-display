@@ -6,7 +6,7 @@
 
   <PropertyGroup>
     <PackageId>Solrevdev.InstagramBasicDisplay</PackageId>
-    <Version>1.0.7</Version>
+<Version>1.0.8</Version>
     <Title>Solrevdev.InstagramBasicDisplay</Title>
     <Description>A netstandard2.0 library that consumes the new Instagram Basic Display API. Also includes a Razor Pages Web example that shows how to use the library and a Static site example that shows how to consume the new Instagram Basic Display API with just vanilla JavaScript.</Description>
     <PackageDescription>A netstandard2.0 library that consumes the new Instagram Basic Display API. Also includes a Razor Pages Web example that shows how to use the library and a Static site example that shows how to consume the new Instagram Basic Display API with just vanilla JavaScript.</PackageDescription>
