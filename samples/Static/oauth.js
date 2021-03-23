@@ -89,7 +89,7 @@ async function swapAuthCodeForAccessToken() {
 async function getInstagramMedia() {
   try {
     if (apiUrl === '') {
-      apiUrl = `https://graph.instagram.com/me/media?fields=caption,id,media_type,media_url,permalink,thumbnail_url,username,timestamp,children.id,children.media_type,children.media_url,children.permalink,children.thumbnail_url,children.username,children.timestamp&access_token=${access_token}`;
+      apiUrl = `https://graph.instagram.com/me/media?fields=caption,id,media_type,media_url,permalink,thumbnail_url,username,timestamp,children{id,media_type,media_url,permalink,thumbnail_url,username,timestamp}&access_token=${access_token}`;
     }
 
     showPleaseWait();
