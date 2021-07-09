@@ -1,5 +1,6 @@
 ## Solrevdev.InstagramBasicDisplay ![](docs/instagram-logo.png)
 
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/solrevdev/instagram-basic-display)
 [![GitHub last commit](https://img.shields.io/github/last-commit/solrevdev/instagram-basic-display)](https://github.com/solrevdev/instagram-basic-display) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7c18c6c52f0d444092ef663b719b86f8)](https://www.codacy.com/manual/solrevdev/instagram-basic-display?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=solrevdev/instagram-basic-display&amp;utm_campaign=Badge_Grade) [![CI](https://github.com/solrevdev/instagram-basic-display/workflows/CI/badge.svg)](https://github.com/solrevdev/instagram-basic-display) [![Nuget](https://img.shields.io/nuget/v/solrevdev.instagrambasicdisplay)](https://www.nuget.org/packages/Solrevdev.InstagramBasicDisplay/) [![Twitter Follow](https://img.shields.io/twitter/follow/solrevdev?label=Follow&style=social)](https://twitter.com/solrevdev)
 
 A [netstandard2.0](https://docs.microsoft.com/en-us/dotnet/standard/net-standard) library that consumes the new [Instagram Basic Display API](https://developers.facebook.com/docs/instagram-basic-display-api/).
