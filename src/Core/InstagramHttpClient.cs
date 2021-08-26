@@ -20,9 +20,9 @@ namespace Solrevdev.InstagramBasicDisplay.Core
     {
         private readonly InstagramCredentials _appSettings;
         private readonly IHttpClientFactory _clientFactory;
-        private readonly ILogger<InstagramApi> _logger;
+        private readonly ILogger<InstagramHttpClient> _logger;
 
-        public InstagramHttpClient(IOptions<InstagramCredentials> appSettings, IHttpClientFactory clientFactory, ILogger<InstagramApi> logger)
+        public InstagramHttpClient(IOptions<InstagramCredentials> appSettings, IHttpClientFactory clientFactory, ILogger<InstagramHttpClient> logger)
         {
             _appSettings = appSettings.Value;
             _clientFactory = clientFactory;
