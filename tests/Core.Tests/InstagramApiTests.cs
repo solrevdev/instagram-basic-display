@@ -45,12 +45,13 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Tests
             // Arrange
             var credentials = MockInstagramCredentials();
             var options = Options.Create(credentials);
-            var logger = Mock.Of<ILogger<InstagramApi>>();
+            var loggerForHttpClient = Mock.Of<ILogger<InstagramHttpClient>>();
+            var loggerForApi = Mock.Of<ILogger<InstagramApi>>();
             var mockFactory = MockHttpClientFactory();
-            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, logger);
+            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, loggerForHttpClient);
 
             // Act
-            var api = new InstagramApi(options, logger, instagramHttpClient);
+            var api = new InstagramApi(options, loggerForApi, instagramHttpClient);
 
             // Assert
             Assert.NotNull(api);
@@ -64,12 +65,13 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Tests
             credentials.Name = null;
 
             var options = Options.Create(credentials);
-            var logger = Mock.Of<ILogger<InstagramApi>>();
+            var loggerForHttpClient = Mock.Of<ILogger<InstagramHttpClient>>();
+            var loggerForApi = Mock.Of<ILogger<InstagramApi>>();
             var mockFactory = MockHttpClientFactory();
-            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, logger);
+            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, loggerForHttpClient);
 
             // Act
-            var api = new InstagramApi(options, logger, instagramHttpClient);
+            var api = new InstagramApi(options, loggerForApi, instagramHttpClient);
             var ex = Assert.Throws<ArgumentNullException>(() => api.Authorize(""));
 
             // Assert
@@ -88,12 +90,13 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Tests
             credentials.ClientId = null;
 
             var options = Options.Create(credentials);
-            var logger = Mock.Of<ILogger<InstagramApi>>();
+            var loggerForHttpClient = Mock.Of<ILogger<InstagramHttpClient>>();
+            var loggerForApi = Mock.Of<ILogger<InstagramApi>>();
             var mockFactory = MockHttpClientFactory();
-            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, logger);
+            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, loggerForHttpClient);
 
             // Act
-            var api = new InstagramApi(options, logger, instagramHttpClient);
+            var api = new InstagramApi(options, loggerForApi, instagramHttpClient);
             var ex = Assert.Throws<ArgumentNullException>(() => api.Authorize(""));
 
             // Assert
@@ -112,12 +115,13 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Tests
             credentials.ClientSecret = null;
 
             var options = Options.Create(credentials);
-            var logger = Mock.Of<ILogger<InstagramApi>>();
+            var loggerForHttpClient = Mock.Of<ILogger<InstagramHttpClient>>();
+            var loggerForApi = Mock.Of<ILogger<InstagramApi>>();
             var mockFactory = MockHttpClientFactory();
-            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, logger);
+            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, loggerForHttpClient);
 
             // Act
-            var api = new InstagramApi(options, logger, instagramHttpClient);
+            var api = new InstagramApi(options, loggerForApi, instagramHttpClient);
             var ex = Assert.Throws<ArgumentNullException>(() => api.Authorize(""));
 
             // Assert
@@ -136,12 +140,13 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Tests
             credentials.RedirectUrl = null;
 
             var options = Options.Create(credentials);
-            var logger = Mock.Of<ILogger<InstagramApi>>();
+            var loggerForHttpClient = Mock.Of<ILogger<InstagramHttpClient>>();
+            var loggerForApi = Mock.Of<ILogger<InstagramApi>>();
             var mockFactory = MockHttpClientFactory();
-            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, logger);
+            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, loggerForHttpClient);
 
             // Act
-            var api = new InstagramApi(options, logger, instagramHttpClient);
+            var api = new InstagramApi(options, loggerForApi, instagramHttpClient);
             var ex = Assert.Throws<ArgumentNullException>(() => api.Authorize(""));
 
             // Assert
@@ -158,13 +163,14 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Tests
             // Arrange
             var credentials = MockInstagramCredentials();
             var options = Options.Create(credentials);
-            var logger = Mock.Of<ILogger<InstagramApi>>();
+            var loggerForHttpClient = Mock.Of<ILogger<InstagramHttpClient>>();
+            var loggerForApi = Mock.Of<ILogger<InstagramApi>>();
             var mockFactory = MockHttpClientFactory();
-            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, logger);
+            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, loggerForHttpClient);
 
             // Act
             const string state = "";
-            var api = new InstagramApi(options, logger, instagramHttpClient);
+            var api = new InstagramApi(options, loggerForApi, instagramHttpClient);
             var url = api.Authorize(state);
 
             // Assert
@@ -187,12 +193,13 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Tests
             // Arrange
             var credentials = MockInstagramCredentials();
             var options = Options.Create(credentials);
-            var logger = Mock.Of<ILogger<InstagramApi>>();
+            var loggerForHttpClient = Mock.Of<ILogger<InstagramHttpClient>>();
+            var loggerForApi = Mock.Of<ILogger<InstagramApi>>();
             var mockFactory = MockHttpClientFactory_For_Authenticate();
-            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, logger);
+            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, loggerForHttpClient);
 
             // Act
-            var api = new InstagramApi(options, logger, instagramHttpClient);
+            var api = new InstagramApi(options, loggerForApi, instagramHttpClient);
             var response = await api.AuthenticateAsync("", "").ConfigureAwait(false);
 
             // Assert
@@ -211,9 +218,10 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Tests
             // Arrange
             var credentials = MockInstagramCredentials();
             var options = Options.Create(credentials);
-            var logger = Mock.Of<ILogger<InstagramApi>>();
+            var loggerForHttpClient = Mock.Of<ILogger<InstagramHttpClient>>();
+            var loggerForApi = Mock.Of<ILogger<InstagramApi>>();
             var mockFactory = MockHttpClientFactory_For_GetMediaList();
-            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, logger);
+            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, loggerForHttpClient);
             var oAuthResponse = new OAuthResponse
             {
                 AccessToken = "123",
@@ -225,7 +233,7 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Tests
             };
 
             // Act
-            var api = new InstagramApi(options, logger, instagramHttpClient);
+            var api = new InstagramApi(options, loggerForApi, instagramHttpClient);
             var response = await api.GetMediaListAsync(oAuthResponse).ConfigureAwait(false);
 
             // Assert
@@ -246,12 +254,13 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Tests
             // Arrange
             var credentials = MockInstagramCredentials();
             var options = Options.Create(credentials);
-            var logger = Mock.Of<ILogger<InstagramApi>>();
+            var loggerForHttpClient = Mock.Of<ILogger<InstagramHttpClient>>();
+            var loggerForApi = Mock.Of<ILogger<InstagramApi>>();
             var mockFactory = MockHttpClientFactory_For_Authenticate_Exception("OAuthException.json", HttpStatusCode.BadRequest);
-            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, logger);
+            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, loggerForHttpClient);
 
             // Act
-            var api = new InstagramApi(options, logger, instagramHttpClient);
+            var api = new InstagramApi(options, loggerForApi, instagramHttpClient);
             var ex = await Assert.ThrowsAsync<InstagramOAuthException>(() => api.AuthenticateAsync("", "")).ConfigureAwait(false);
 
             const string expectedMessage = "Error validating access token: Session has expired on Friday, 13-Mar-20 22:00:00 PDT. The current time is Saturday, 14-Mar-20 04:25:10 PDT.";
@@ -281,12 +290,13 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Tests
             // Arrange
             var credentials = MockInstagramCredentials();
             var options = Options.Create(credentials);
-            var logger = Mock.Of<ILogger<InstagramApi>>();
+            var loggerForHttpClient = Mock.Of<ILogger<InstagramHttpClient>>();
+            var loggerForApi = Mock.Of<ILogger<InstagramApi>>();
             var mockFactory = MockHttpClientFactory_For_Authenticate_Exception("IGApiException.json", HttpStatusCode.BadRequest);
-            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, logger);
+            var instagramHttpClient = new InstagramHttpClient(options, mockFactory.Object, loggerForHttpClient);
 
             // Act
-            var api = new InstagramApi(options, logger, instagramHttpClient);
+            var api = new InstagramApi(options, loggerForApi, instagramHttpClient);
             var ex = await Assert.ThrowsAsync<InstagramApiException>(() => api.AuthenticateAsync("", "")).ConfigureAwait(false);
 
             const string expectedMessage = "Unsupported get request. Object with ID '3518610791' does not exist, cannot be loaded due to missing permissions, or does not support this operation";
