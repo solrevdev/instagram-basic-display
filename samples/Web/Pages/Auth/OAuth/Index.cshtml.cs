@@ -80,12 +80,12 @@ namespace Web.Pages.Auth.OAuth
             catch (InstagramApiException ex)
             {
                 Message = $"InstagramApiException! {ex.Message} ";
-                _logger.LogError(ex, "Instagram API error - instagram response message : [{message}] error_type : [{type}] error_code : [{code}] error_sub_code : [{subCode}] fb_trace [{fbTrace}]", ex.Message, ex, ex.StackTrace, ex.Message, ex.ErrorType, ex.ErrorCode, ex.ErrorSubcode, ex.FbTraceId);
+                _logger.LogError(ex, "Instagram API error - instagram response message : [{message}] error_type : [{type}] error_code : [{code}] error_sub_code : [{subCode}] fb_trace [{fbTrace}]", ex.Message, ex.ErrorType, ex.ErrorCode, ex.ErrorSubcode, ex.FbTraceId);
             }
             catch (InstagramException ex)
             {
                 Message = $"InstagramException! {ex.Message} ";
-                _logger.LogError(ex, "General Instagram error - instagram response message : [{message}] error_type : [{type}] error_code : [{code}] fb_trace [{fbTrace}]", ex.Message, ex, ex.StackTrace, ex.Message, ex.ErrorType, ex.ErrorCode, ex.FbTraceId);
+                _logger.LogError(ex, "General Instagram error - instagram response message : [{message}] error_type : [{type}] error_code : [{code}] fb_trace [{fbTrace}]", ex.Message, ex.ErrorType, ex.ErrorCode, ex.FbTraceId);
             }
             catch (Exception ex)
             {
