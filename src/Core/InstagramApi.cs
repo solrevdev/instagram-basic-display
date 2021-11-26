@@ -387,7 +387,7 @@ namespace Solrevdev.InstagramBasicDisplay.Core
 
             try
             {
-                var url = $"https://graph.instagram.com/{mediaId}/media?fields=caption,id,media_type,media_url,permalink,thumbnail_url,username,timestamp,children{{id,media_type,media_url,permalink,thumbnail_url,username,timestamp}}&access_token={accessToken}";
+                var url = $"https://graph.instagram.com/{mediaId}/?fields=caption,id,media_type,media_url,permalink,thumbnail_url,username,timestamp,children{{id,media_type,media_url,permalink,thumbnail_url,username,timestamp}}&access_token={accessToken}";
                 return await _client.GetJsonAsync<Media>(url).ConfigureAwait(false);
             }
             catch (Exception ex)
