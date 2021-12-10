@@ -10,8 +10,8 @@ namespace Solrevdev.InstagramBasicDisplay.Core.Instagram
         /// <summary>
         /// The Media's caption text. Not returnable for Media in albums.
         /// </summary>
-        [JsonPropertyName("caption")]
-        public string Caption { get; set; }
+        //[JsonPropertyName("caption")]
+        //public string Caption { get; set; }
 
         /// <summary>
         /// The Media's ID.

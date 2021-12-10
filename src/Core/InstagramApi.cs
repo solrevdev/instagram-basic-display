@@ -332,8 +332,8 @@ namespace Solrevdev.InstagramBasicDisplay.Core
         /// </summary>
         /// <param name="response">A valid <see cref="OAuthResponse"/></param>
         /// <param name="mediaId">A valid Media Id</param>
-        /// <returns>A Media object or null if an error is caught</returns>
-        public async Task<Media> GetMediaAsync(OAuthResponse response, string mediaId)
+        /// <returns>A Data object or null if an error is caught</returns>
+        public async Task<Data> GetMediaAsync(OAuthResponse response, string mediaId)
         {
             AssertInstagramSettings();
 
@@ -370,8 +370,8 @@ namespace Solrevdev.InstagramBasicDisplay.Core
         /// </summary>
         /// <param name="accessToken">An Instagram User Access Token</param>
         /// <param name="mediaId">A valid Media Id</param>
-        /// <returns>A Media object or null if an error is caught</returns>
-        public async Task<Media> GetMediaAsync(string accessToken, string mediaId)
+        /// <returns>A Data object or null if an error is caught</returns>
+        public async Task<Data> GetMediaAsync(string accessToken, string mediaId)
         {
             AssertInstagramSettings();
 
@@ -387,8 +387,78 @@ namespace Solrevdev.InstagramBasicDisplay.Core
 
             try
             {
-                var url = $"https://graph.instagram.com/{mediaId}/media?fields=caption,id,media_type,media_url,permalink,thumbnail_url,username,timestamp,children{{id,media_type,media_url,permalink,thumbnail_url,username,timestamp}}&access_token={accessToken}";
-                return await _client.GetJsonAsync<Media>(url).ConfigureAwait(false);
+                var url = $"https://graph.instagram.com/{mediaId}/?fields=caption,id,media_type,media_url,permalink,thumbnail_url,username,timestamp,children{{id,media_type,media_url,permalink,thumbnail_url,username,timestamp}}&access_token={accessToken}";
+                return await _client.GetJsonAsync<Data>(url).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Cannot [{me}] with the accessToken [{token}] and media id [{user}]", nameof(GetMediaAsync), accessToken, mediaId);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a <see also="Media" /> object via it's unique identifier
+        /// </summary>
+        /// <param name="response">A valid <see cref="OAuthResponse"/></param>
+        /// <param name="mediaId">A valid ChildMedia Id</param>
+        /// <returns>A ChildData object or null if an error is caught</returns>
+        public async Task<ChildData> GetChildMediaAsync(OAuthResponse response, string mediaId)
+        {
+            AssertInstagramSettings();
+
+            if (response == null)
+            {
+                throw new ArgumentNullException(nameof(response));
+            }
+
+            if (string.IsNullOrWhiteSpace(response.AccessToken))
+            {
+                throw new ArgumentNullException(nameof(response.AccessToken));
+            }
+
+            if (response.User == null)
+            {
+                throw new ArgumentNullException(nameof(response.User));
+            }
+
+            if (string.IsNullOrWhiteSpace(response.User.Id))
+            {
+                throw new ArgumentNullException(nameof(response.User.Id));
+            }
+
+            if (string.IsNullOrWhiteSpace(mediaId))
+            {
+                throw new ArgumentNullException(nameof(mediaId));
+            }
+
+            return await GetChildMediaAsync(response.AccessToken, mediaId).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a <see also="Media" /> object via it's unique identifier
+        /// </summary>
+        /// <param name="accessToken">An Instagram User Access Token</param>
+        /// <param name="mediaId">A valid ChildMedia Id</param>
+        /// <returns>A ChildData object or null if an error is caught</returns>
+        public async Task<ChildData> GetChildMediaAsync(string accessToken, string mediaId)
+        {
+            AssertInstagramSettings();
+
+            if (string.IsNullOrWhiteSpace(accessToken))
+            {
+                throw new ArgumentNullException(nameof(accessToken));
+            }
+
+            if (string.IsNullOrWhiteSpace(mediaId))
+            {
+                throw new ArgumentNullException(nameof(mediaId));
+            }
+
+            try
+            {
+                var url = $"https://graph.instagram.com/{mediaId}/?fields=id,media_type,media_url,permalink,thumbnail_url,username,timestamp&access_token={accessToken}";
+                return await _client.GetJsonAsync<ChildData>(url).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
